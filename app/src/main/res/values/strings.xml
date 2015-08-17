@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="application.name">DevBook</string>
+    <string name="application.name">DevBook v1</string>
 
     <string name="label.drawer.open">Open</string>
     <string name="label.drawer.close">Close</string>
