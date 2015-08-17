@@ -6,11 +6,10 @@
     <string name="label.drawer.open">Open</string>
     <string name="label.drawer.close">Close</string>
 
-    <string name="label.menu.oneparagraph">One</string>
-    <string name="label.menu.twoparagraphs">Two</string>
-    <string name="label.menu.threeparagraphs">Three</string>
-    <string name="label.menu.fourparagraphs">Four</string>
-    <string name="label.menu.fiveparagraphs">Five</string>
+    <string name="label.menu.oneparagraph">Android</string>
+    <string name="label.menu.twoparagraphs">iOS</string>
+    <string name="label.menu.threeparagraphs">Backend</string>
+
 
     <string name="label.action.refresh">Refresh</string>
 

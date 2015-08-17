@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 
 import com.dmi.devbook.BuildConfig;
 import com.dmi.devbook.R;
@@ -23,7 +24,6 @@ public class SplashActivity extends AppCompatActivity {
 
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_splash);
 
         if (savedInstanceState != null) {

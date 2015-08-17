@@ -3,9 +3,11 @@ package com.dmi.devbook.loader;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-abstract class AbstractLoader<T> extends AsyncTaskLoader<T> {
+import java.util.List;
 
-    private T mResult;
+abstract class AbstractLoader<T> extends AsyncTaskLoader<List<T>> {
+
+    private List<T> mResult;
 
     public AbstractLoader(final Context context) {
         super(context);
@@ -21,7 +23,7 @@ abstract class AbstractLoader<T> extends AsyncTaskLoader<T> {
     }
 
     @Override
-    public void deliverResult(final T result) {
+    public void deliverResult(final List<T> result) {
         super.deliverResult(result);
         mResult = result;
     }

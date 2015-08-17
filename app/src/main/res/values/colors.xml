@@ -4,5 +4,7 @@
     <color name="background.light">#DDD</color>
     <color name="background.dull">#4F4B48</color>
     <color name="color.accent">#fb4e23</color>
+    <color name="color.white">#fff</color>
+    <color name="color.black.alpha">#80000000</color>
 
 </resources>

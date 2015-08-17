@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Base devbook theme. -->
+
     <style name="application.theme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <!-- colorPrimary is used for the default action bar background -->
@@ -16,8 +17,9 @@
 
     </style>
 
-    <style name="application.theme.splash">
+    <style name="application.theme.splash" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
     </style>
 
     <style name="style"/>

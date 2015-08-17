@@ -4,19 +4,17 @@ import android.app.Application;
 
 import com.dmi.devbook.BuildConfig;
 import com.dmi.devbook.R;
-import com.dmi.devbook.loader.LoremLoader;
-import com.dmi.devbook.service.LoremService;
-import com.dmi.devbook.service.TextConverter;
+import com.dmi.devbook.loader.DevLoader;
+import com.dmi.devbook.service.DevService;
 
 import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
 import retrofit.client.Client;
 import retrofit.client.OkClient;
 
-@Module(injects = {LoremLoader.class})
+@Module(injects = {DevLoader.class})
 public class RestModule {
 
     private final String mEndpoint;
@@ -36,8 +34,7 @@ public class RestModule {
     public RestAdapter provideRestAdapter(final Client client) {
         final RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setClient(client)
-                .setEndpoint(mEndpoint)
-                .setConverter(new TextConverter());
+                .setEndpoint(mEndpoint);
 
         if (BuildConfig.DEBUG) {
             builder.setLogLevel(RestAdapter.LogLevel.FULL);
@@ -48,7 +45,7 @@ public class RestModule {
 
     @Provides
     @Singleton
-    public LoremService provideLoremService(final RestAdapter restAdapter) {
-        return restAdapter.create(LoremService.class);
+    public DevService provideDevService(final RestAdapter restAdapter) {
+        return restAdapter.create(DevService.class);
     }
 }

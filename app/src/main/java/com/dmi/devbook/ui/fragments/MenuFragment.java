@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dmi.devbook.R;
+import com.dmi.devbook.model.Dev;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -25,33 +26,22 @@ public class MenuFragment extends Fragment {
         new MenuEntry(R.string.label_menu_oneparagraph) {
             @Override
             public Fragment getFragment() {
-                return LoremFragment.newInstance(1);
+                return DevFragment.newInstance(Dev.ANDROID_DEVELOPER);
             }
         },
         new MenuEntry(R.string.label_menu_twoparagraphs) {
             @Override
             public Fragment getFragment() {
-                return LoremFragment.newInstance(2);
+                return DevFragment.newInstance(Dev.IOS_DEVELOPER);
             }
         },
         new MenuEntry(R.string.label_menu_threeparagraphs) {
             @Override
             public Fragment getFragment() {
-                return LoremFragment.newInstance(3);
+                return DevFragment.newInstance(Dev.BACKEND_DEVELOPER);
             }
-        },
-        new MenuEntry(R.string.label_menu_fourparagraphs) {
-            @Override
-            public Fragment getFragment() {
-                return LoremFragment.newInstance(4);
-            }
-        },
-        new MenuEntry(R.string.label_menu_fiveparagraphs) {
-            @Override
-            public Fragment getFragment() {
-                return LoremFragment.newInstance(5);
-            }
-        },
+        }
+
     };
 
     @SuppressWarnings("checkstyle:visibilitymodifier")

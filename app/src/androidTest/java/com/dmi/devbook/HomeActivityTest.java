@@ -22,9 +22,12 @@ public class HomeActivityTest extends ActivityInstrumentationTestCase2<HomeActiv
     }
 
 
-    public void testTextViewContainsLoremIpsum() {
-        onView(withId(R.id.view_lorem))
-                .check(matches(withText(containsString("Lorem ipsum"))));
+    public void testGson(){
+
     }
+//    public void testTextViewContainsLoremIpsum() {
+//        onView(withId(R.id.view_lorem))
+//                .check(matches(withText(containsString("Lorem ipsum"))));
+//    }
 
 }
