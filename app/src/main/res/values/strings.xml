@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="application.name">DevBook</string>
+
+    <string name="label.drawer.open">Open</string>
+    <string name="label.drawer.close">Close</string>
+
+    <string name="label.menu.oneparagraph">One</string>
+    <string name="label.menu.twoparagraphs">Two</string>
+    <string name="label.menu.threeparagraphs">Three</string>
+    <string name="label.menu.fourparagraphs">Four</string>
+    <string name="label.menu.fiveparagraphs">Five</string>
+
+    <string name="label.action.refresh">Refresh</string>
+
+    <string name="activity_splash">splash</string>
+    <string name="activity_home">home</string>
+    <string name="fragment_lorem">Lorem</string>
+
+    <string name="link_article">link</string>
+    <string name="link_action">click</string>
+
+</resources>
