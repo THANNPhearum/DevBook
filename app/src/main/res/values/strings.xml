@@ -20,4 +20,28 @@
     <string name="link_article">link</string>
     <string name="link_action">click</string>
 
+    <!-- Drawer -->
+    <string name="drawer_item_android">Android</string>
+    <string name="drawer_item_ios">iOS</string>
+    <string name="drawer_item_backend">Backend</string>
+    <string name="drawer_item_favorite">Favorite</string>
+    <string name="drawer_item_section_header">Settings</string>
+    <string name="drawer_item_settings">Settings</string>
+    <string name="drawer_item_help">Help</string>
+    <string name="drawer_item_open_source">Open Source</string>
+    <string name="drawer_item_contact">Contact</string>
+
+    <!-- Detail -->
+    <string name="detail">Detail</string>
+    <string name="phone">Phone</string>
+    <string name="location">Location</string>
+    <string name="skype">Skype</string>
+    <string name="email">Email</string>
+    <string name="department">Department</string>
+    <string name="position">Position</string>
+    <string name="favorite_already_added">Already added to Favorite!</string>
+    <string name="favorite_saved">Add to Favorite successful!</string>
+    <string name="favorite_deleted">Delete favorite successful!</string>
+
+
 </resources>

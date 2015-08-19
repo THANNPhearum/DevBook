@@ -3,11 +3,15 @@
 
 
     <!-- fix -->
-    <dimen name="dimen_4dp">4dp</dimen>
-    <dimen name="dimen_8dp">8dp</dimen>
-    <dimen name="dimen_16dp">16dp</dimen>
-    <dimen name="dimen_24dp">24dp</dimen>
-    <dimen name="dimen_32dp">32dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="margin_standard">16dp</dimen>
+    <dimen name="margin_short">8dp</dimen>
+    <dimen name="margin_extra_short">4dp</dimen>
+
+    <dimen name="header_bar_height">72dp</dimen>
+    <dimen name="intersection_height">16dp</dimen>
 
     <dimen name="text_scale_12sp">12sp</dimen>
     <dimen name="text_scale_14sp">14sp</dimen>
@@ -15,14 +19,15 @@
     <dimen name="text_scale_20sp">20sp</dimen>
     <dimen name="text_scale_34sp">34sp</dimen>
 
+    <!-- fill scrollview -->
+    <dimen name="flexible_space_image_height">240dp</dimen>
+    <dimen name="margin_floting_button">42dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
 
     <dimen name="menu_width">240dp</dimen>
-
     <dimen name="layout_margin_horizontal">16dp</dimen>
     <dimen name="layout_margin_vertical">8dp</dimen>
-
     <dimen name="text_padding">16dp</dimen>
-
     <dimen name="dev_photo_size">65dp</dimen>
 
 </resources>

@@ -8,13 +8,13 @@ import retrofit.http.GET;
 
 public interface DevService {
 
-    @GET("/gekko/android.json")
+    @GET("/goldengekko/android.json")
     List<Dev> getAndroidDevs();
 
-    @GET("/gekko/ios.json")
+    @GET("/goldengekko/ios.json")
     List<Dev> getIosDevs();
 
-    @GET("/gekko/backend.json")
+    @GET("/goldengekko/backend.json")
     List<Dev> getBackendDevs();
 
 }

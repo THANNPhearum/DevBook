@@ -11,26 +11,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.dmi.devbook.R;
 import com.dmi.devbook.TemplateApplication;
 import com.dmi.devbook.adapter.DevAdapter;
+import com.dmi.devbook.intent.DetailIntent;
+import com.dmi.devbook.listener.RecyclerItemClickListener;
 import com.dmi.devbook.loader.DevLoader;
 import com.dmi.devbook.model.Dev;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
 public class DevFragment extends AbstractSpinnerFragment {
 
     private static final String ARG_DEV_TYPE = "ARG_DEV_TYPE";
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private DevAdapter mDevAdapter;
     private List<Dev> mDevs;
 
     public static DevFragment newInstance(final int devType) {
@@ -48,35 +44,41 @@ public class DevFragment extends AbstractSpinnerFragment {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
-        mDevs = new ArrayList<Dev>();
+        mDevs = new ArrayList<>();
     }
 
     @Override
     public View onCreateContentView(final LayoutInflater inflater, final ViewGroup container,
                                     final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_lorem, container, false);
+        final View view = inflater.inflate(R.layout.fragment_dev, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        startActivity(new DetailIntent(getActivity(), mDevs.get(position)));
+                    }
+                })
+        );
 
 
         return view;
     }
 
     @Override
-    public void onActivityCreated(final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
         getLoaderManager().initLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication()));
-
     }
-
 
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.fragment_lorem, menu);
+        inflater.inflate(R.menu.fragment_dev, menu);
     }
 
     @Override
@@ -117,13 +119,14 @@ public class DevFragment extends AbstractSpinnerFragment {
             super.onLoadFinished(loader, data);
             hideSpinner();
             mDevs.clear();
+            boolean isLocal = (getDevType() == Dev.FAVORITE_DEVELOPER);
             for (Dev dev : data) {
+                dev.setLocal(isLocal);
                 mDevs.add(dev);
             }
-            mDevAdapter = new DevAdapter(mDevs, getActivity());
+            DevAdapter mDevAdapter = new DevAdapter(mDevs, getActivity());
             mRecyclerView.setAdapter(mDevAdapter);
-            if (mDevAdapter != null)
-                mDevAdapter.notifyDataSetChanged();
+            mDevAdapter.notifyDataSetChanged();
 
         }
     }

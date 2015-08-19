@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.dmi.devbook">
+<manifest
+    package="com.dmi.devbook"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:icon="@mipmap/ic_launcher"
         android:name=".TemplateApplication"
         android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/application.name"
         android:theme="@style/application.theme">
 
@@ -19,7 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.HomeActivity"/>
+        <activity android:name=".ui.HomeActivity"
+                  android:launchMode="singleTop"
+                  android:theme="@style/CustomTheme"
+            />
+        <activity
+            android:name=".ui.DetailActivity"
+            android:label="@string/detail"
+            android:theme="@style/CustomActionBarTheme"
+
+            android:parentActivityName=".ui.HomeActivity"
+            />
 
     </application>
 </manifest>

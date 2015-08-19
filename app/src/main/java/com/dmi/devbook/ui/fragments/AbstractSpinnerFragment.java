@@ -43,7 +43,7 @@ public abstract class AbstractSpinnerFragment extends Fragment {
         mContentView.setVisibility(View.VISIBLE);
     }
 
-    public boolean isSpinnerVisible() {
-        return mSpinnerView.getVisibility() == View.VISIBLE;
-    }
+//    public boolean isSpinnerVisible() {
+//        return mSpinnerView.getVisibility() == View.VISIBLE;
+//    }
 }

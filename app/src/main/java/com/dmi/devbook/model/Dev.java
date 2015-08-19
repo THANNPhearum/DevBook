@@ -1,21 +1,41 @@
 package com.dmi.devbook.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * The Dev entity to store brief information of the developer.
  */
-public class Dev {
 
+
+@DatabaseTable(tableName = "devs")
+public class Dev {
+    public static final String TAG = "DEV";
     public static final int ANDROID_DEVELOPER = 1;
     public static final int IOS_DEVELOPER = 2;
     public static final int BACKEND_DEVELOPER = 3;
+    public static final int FAVORITE_DEVELOPER = 4;
+    @DatabaseField(id = true)
     private String mName;
+    @DatabaseField
     private String mPosition;
+    @DatabaseField
     private String mPhone;
+    @DatabaseField
     private String mSkype;
+    @DatabaseField
     private String mEmail;
+    @DatabaseField
     private String mPhoto;
+    @DatabaseField
     private String mDepartment;
+    @DatabaseField
     private String mLocation;
+    private boolean local;
+
+    public Dev() {
+
+    }
 
     public String getName() {
         return mName;
@@ -81,8 +101,11 @@ public class Dev {
         this.mLocation = mLocation;
     }
 
-    @Override
-    public String toString() {
-        return "Name=" + this.mName + "\t" + "Phone=" + this.mPhone + "\n";
+    public boolean isLocal() {
+        return local;
+    }
+
+    public void setLocal(boolean local) {
+        this.local = local;
     }
 }

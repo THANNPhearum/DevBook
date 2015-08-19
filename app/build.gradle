@@ -173,29 +173,31 @@ android {
 
 // Use http://gradleplease.appspot.com/ to find dependency names.
 dependencies {
-
     // AppCompat
     compile 'com.android.support:appcompat-v7:22.1.1'
     // Google Play Services
     compile 'com.google.android.gms:play-services-base:7.5.0'
     compile 'com.google.android.gms:play-services-analytics:7.5.0'
-
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
     compile 'com.android.support:cardview-v7:22.0.+'
     compile 'com.android.support:recyclerview-v7:22.0.+'
-
-
+    compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.melnykov:floatingactionbutton:1.0.7'
+    compile 'com.mikepenz:materialdrawer:3.1.2@aar'
+    compile 'com.mikepenz:iconics-core:1.7.1@aar'
+    compile 'com.mikepenz:google-material-typeface:1.2.0@aar'
     // Injection stuff
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.jakewharton:butterknife:6.0.0'
-
     // Log
     compile 'com.jakewharton.timber:timber:2.5.0'
+    compile files ('libs/ormlite-android-4.43.jar')
+    compile files ('libs/ormlite-core-4.43.jar')
     //Uncomment if you want to include bugsense
     //compile 'com.splunk.mint:mint:3.5'
     //Uncomment if you want to include facebook
@@ -203,11 +205,9 @@ dependencies {
     //transitive = true
     //exclude group: 'com.google.android', module: 'support-v4'
     //}
-
     // Android Instrumentation testing only dependencies
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
-
     // Android unit testing only dependencies
     // TODO can we minimise these??
     testCompile 'junit:junit:4.12'
@@ -216,10 +216,11 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-integration:1.1'
     // Robolectric dependency not fetched in org.robolectric:robolectric:3.0-rc2
     testCompile 'org.apache.maven:maven-ant-tasks:2.1.3'
-    testCompile('org.robolectric:robolectric:3.0-rc2')
-    testCompile ('com.squareup.assertj:assertj-android:1.0.0') {
+    testCompile 'org.robolectric:robolectric:3.0-rc2'
+    testCompile('com.squareup.assertj:assertj-android:1.0.0') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+
 }
 
 configurations {

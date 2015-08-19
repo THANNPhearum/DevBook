@@ -18,6 +18,7 @@ public class TemplateApplication extends Application {
 
     private ObjectGraph mObjectsGraph;
 
+
     @Override
     public void onCreate() {
         super.onCreate();

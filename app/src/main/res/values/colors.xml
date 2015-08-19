@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="background.light">#DDD</color>
-    <color name="background.dull">#4F4B48</color>
+    <color name="background.light">#f44336</color>
+    <color name="background.dull">#e53935</color>
     <color name="color.accent">#fb4e23</color>
+
     <color name="color.white">#fff</color>
+    <color name="color.black">#000</color>
+    <color name="color.red">#e53935</color>
     <color name="color.black.alpha">#80000000</color>
+    <color name="color.transparent">#00000000</color>
+    <color name="divider">#20000000</color>
+    <color name="primary">#e53935</color>
+    <color name="primary_pressed">#f44336</color>
+    <color name="ripple">#F06292</color>
+
+
+
 
 </resources>

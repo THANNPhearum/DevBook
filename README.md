@@ -1,4 +1,3 @@
-I change
 Gradle Template Project
 =======================
 

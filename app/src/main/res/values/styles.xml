@@ -3,23 +3,25 @@
 
     <!-- Base devbook theme. -->
 
-    <style name="application.theme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
-        <!-- colorPrimary is used for the default action bar background -->
+    <style name="application.theme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/background.light</item>
-
-        <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/background.dull</item>
-
-        <!-- colorAccent is used as the default value for colorControlActivated,
-             which is used to tint widgets -->
         <item name="colorAccent">@color/color.accent</item>
-
     </style>
 
     <style name="application.theme.splash" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
+    </style>
+
+    <style name="CustomActionBarTheme"
+           parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/background.light</item>
+        <item name="colorPrimaryDark">@color/background.dull</item>
+        <item name="colorAccent">@color/color.accent</item>
+        <item name="actionBarTheme">@style/MyApp.ActionBarTheme</item>
+        <item name="actionBarStyle">@style/ThemeActionBar</item>
+        <item name="windowActionBarOverlay">true</item>
     </style>
 
     <style name="style"/>
@@ -44,4 +46,41 @@
         <item name="android:padding">@dimen/text_padding</item>
     </style>
 
+    <style name="ThemeActionBar"
+           parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@color/color.transparent</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <style name="CustomTheme" parent="MaterialDrawerTheme.TranslucentStatus">
+
+        <item name="colorPrimary">@color/background.light</item>
+        <item name="colorPrimaryDark">@color/background.dull</item>
+        <item name="colorAccent">@color/color.accent</item>
+
+        <!-- MaterialDrawer specific values -->
+        <item name="material_drawer_background">@color/material_drawer_dark_background</item>
+        <item name="material_drawer_icons">@color/material_drawer_dark_icons</item>
+        <item name="material_drawer_primary_text">@color/material_drawer_dark_primary_text</item>
+        <item name="material_drawer_secondary_text">@color/material_drawer_dark_secondary_text
+        </item>
+        <item name="material_drawer_hint_text">@color/material_drawer_dark_hint_text</item>
+        <item name="material_drawer_divider">@color/material_drawer_dark_divider</item>
+        <item name="material_drawer_selected">@color/material_drawer_dark_selected</item>
+        <item name="material_drawer_selected_text">#F1433C</item>
+        <item name="material_drawer_header_selection_text">
+            @color/material_drawer_dark_primary_text
+        </item>
+
+    </style>
+
+    <!-- Style for the navigation drawer icon -->
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/background.light</item>
+    </style>
+    <style name="MyApp.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- THIS is where you can color the arrow! -->
+        <item name="colorControlNormal">@color/background.light</item>
+    </style>
 </resources>

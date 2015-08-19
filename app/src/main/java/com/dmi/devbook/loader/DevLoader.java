@@ -1,5 +1,6 @@
 package com.dmi.devbook.loader;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -7,7 +8,10 @@ import android.support.v4.content.Loader;
 import com.dmi.devbook.TemplateApplication;
 import com.dmi.devbook.model.Dev;
 import com.dmi.devbook.service.DevService;
+import com.dmi.devbook.sqlite.DatabaseHelper;
+import com.j256.ormlite.dao.Dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,14 +21,21 @@ public class DevLoader extends AbstractLoader<Dev> {
     @SuppressWarnings("checkstyle:visibilitymodifier")
     @Inject
     DevService mDevService;
-
+    private Dao<Dev, Integer> mDevDao;
     private int devType;
+    private DatabaseHelper mDatabaseHelper;
 
     public DevLoader(final TemplateApplication application, int devType) {
         super(application);
         application.inject(this);
         this.devType = devType;
+        try {
+            this.mDevDao = getHelper(application.getApplicationContext()).getDao();
+        } catch (SQLException ex) {
+            //Error
+        }
     }
+
 
     @Override
     public List<Dev> loadInBackground() {
@@ -32,8 +43,19 @@ public class DevLoader extends AbstractLoader<Dev> {
             return mDevService.getAndroidDevs();
         } else if (devType == Dev.IOS_DEVELOPER) {
             return mDevService.getIosDevs();
-        } else {
+        } else if (devType == Dev.BACKEND_DEVELOPER) {
             return mDevService.getBackendDevs();
+        } else {
+            try {
+                if (mDevDao != null) {
+                    return mDevDao.queryForAll();
+                } else {
+                    return null;
+                }
+            } catch (SQLException ex) {
+                //return null for empty favorite
+            }
+            return null;
         }
     }
 
@@ -61,5 +83,12 @@ public class DevLoader extends AbstractLoader<Dev> {
         public void onLoaderReset(final Loader loader) {
             // unused
         }
+    }
+
+    private DatabaseHelper getHelper(Context context) {
+        if (mDatabaseHelper == null) {
+            mDatabaseHelper = new DatabaseHelper(context);
+        }
+        return mDatabaseHelper;
     }
 }

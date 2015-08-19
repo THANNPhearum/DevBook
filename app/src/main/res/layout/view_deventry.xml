@@ -4,9 +4,9 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dimen_16dp"
-    android:layout_marginRight="@dimen/dimen_16dp"
-    android:layout_marginTop="@dimen/dimen_16dp"
+    android:layout_marginLeft="@dimen/margin_standard"
+    android:layout_marginRight="@dimen/margin_standard"
+    android:layout_marginTop="@dimen/margin_standard"
     card_view:cardCornerRadius="4dp">
 
     <LinearLayout
@@ -18,23 +18,24 @@
             android:id="@+id/view_deventry_photo"
             android:layout_width="@dimen/dev_photo_size"
             android:layout_height="@dimen/dev_photo_size"
-            android:layout_marginLeft="@dimen/dimen_24dp"
-            android:layout_marginTop="@dimen/dimen_16dp"
-            android:layout_marginBottom="@dimen/dimen_16dp"
+            android:layout_marginLeft="@dimen/margin_standard"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:layout_marginBottom="@dimen/margin_standard"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dimen_16dp"
-            android:layout_marginRight="@dimen/dimen_24dp"
+            android:layout_marginLeft="@dimen/margin_standard"
+            android:layout_marginRight="@dimen/margin_standard"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/view_deventry_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/color.black"
                 android:text="@string/application.name"
                 android:textSize="@dimen/text_scale_16sp" />
 
@@ -43,10 +44,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color.black.alpha"
-                android:layout_marginTop="@dimen/dimen_4dp"
+                android:layout_marginTop="@dimen/margin_extra_short"
                 android:text="@string/application.name"
                 android:textSize="@dimen/text_scale_14sp" />
-
 
         </LinearLayout>
     </LinearLayout>

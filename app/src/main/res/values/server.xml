@@ -2,5 +2,7 @@
 <resources>
 
     <string name="server.endpoint">http://mobeecode.com</string>
+    <string name="server.photo.url">http://mobeecode.com/goldengekko/photo/</string>
+    <string name="server.photo.thumb.url">http://mobeecode.com/goldengekko/photo/thumb/</string>
 
 </resources>

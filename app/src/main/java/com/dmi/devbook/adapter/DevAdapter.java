@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.dmi.devbook.R;
 import com.dmi.devbook.model.Dev;
 import com.dmi.devbook.util.CircleTransform;
+import com.dmi.devbook.service.ImagePath;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class DevAdapter extends RecyclerView.Adapter<DevAdapter.ViewHolder> {
         //holder.viewDevName.setText(mDataset[position]);
         holder.viewDevName.setText(mDevs.get(position).getName());
         holder.viewDevPosition.setText(mDevs.get(position).getPosition());
-        Picasso.with(mContext).load(mDevs.get(position).getPhoto()).transform(new CircleTransform()).into(holder.viewDevPhoto);
+        Picasso.with(mContext).load(ImagePath.getPhotoThumbUrl(mContext, mDevs.get(position).getPhoto())).transform(new CircleTransform()).into(holder.viewDevPhoto);
     }
 
     @Override
