@@ -3,6 +3,7 @@ package com.dmi.devbook.ui.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class DevFragment extends AbstractSpinnerFragment {
     private static final String ARG_DEV_TYPE = "ARG_DEV_TYPE";
     private RecyclerView mRecyclerView;
     private List<Dev> mDevs;
+    private SwipeRefreshLayout mSwipeRefreshLayout = null;
 
     public static DevFragment newInstance(final int devType) {
         final Bundle args = new Bundle();
@@ -43,7 +45,7 @@ public class DevFragment extends AbstractSpinnerFragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true);
+       // setHasOptionsMenu(true);
         mDevs = new ArrayList<>();
     }
 
@@ -64,14 +66,26 @@ public class DevFragment extends AbstractSpinnerFragment {
                 })
         );
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+        });
 
         return view;
+    }
+
+    void refreshItems() {
+        getLoaderManager().initLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication()));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getLoaderManager().initLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication()));
+        refreshItems();
     }
 
     @Override
@@ -85,8 +99,7 @@ public class DevFragment extends AbstractSpinnerFragment {
     public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         if (id == R.id.menu_refresh) {
-            getLoaderManager().restartLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication()));
-
+            refreshItems();
             return true;
         } else {
             return false;
@@ -118,6 +131,7 @@ public class DevFragment extends AbstractSpinnerFragment {
         public void onLoadFinished(Loader<List<Dev>> loader, List<Dev> data) {
             super.onLoadFinished(loader, data);
             hideSpinner();
+            mSwipeRefreshLayout.setRefreshing(false);
             mDevs.clear();
             boolean isLocal = (getDevType() == Dev.FAVORITE_DEVELOPER);
             for (Dev dev : data) {

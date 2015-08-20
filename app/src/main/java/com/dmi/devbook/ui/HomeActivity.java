@@ -90,6 +90,14 @@ public class HomeActivity extends AppCompatActivity {
         //Load default
         setTitle(getString(R.string.drawer_item_android));
 
+        //dagger 2
+        //pull to refresh
+        //rotation
+        //gpu render
+        //cpu usage
+        //
+        switchFragment(0);
+
 
 
     }
@@ -97,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        switchFragment(0);
+       // switchFragment(0);
     }
 
     @Override

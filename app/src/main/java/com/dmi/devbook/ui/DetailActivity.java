@@ -16,6 +16,7 @@
 
 package com.dmi.devbook.ui;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,13 +39,44 @@ import com.squareup.picasso.Picasso;
 
 import java.sql.SQLException;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Warning: This example does not work on Android 2.3.
  */
 public class DetailActivity extends FillGapBaseActivity<ObservableScrollView> implements ObservableScrollViewCallbacks, View.OnClickListener {
 
-    private TextView mName, mPhone, mEmail, mPosition, mDepartment, mLocation, mSkype;
-    private ImageView mPhoto, mIconEmail, mIconPhone, mIconDepartment, mIconLocation, mIconSkype;
+    @InjectView(R.id.detail_name)
+    TextView mName;
+    @InjectView(R.id.detail_phone)
+    TextView mPhone;
+    @InjectView(R.id.detail_email)
+    TextView mEmail;
+    @InjectView(R.id.detail_position)
+    TextView mPosition;
+    @InjectView(R.id.detail_department)
+    TextView mDepartment;
+    @InjectView(R.id.detail_location)
+    TextView mLocation;
+    @InjectView(R.id.detail_skype)
+    TextView mSkype;
+
+    @InjectView(R.id.detail_photo)
+    ImageView mPhoto;
+    @InjectView(R.id.detail_icon_email)
+    ImageView mIconEmail;
+    @InjectView(R.id.detail_icon_phone)
+    ImageView mIconPhone;
+    @InjectView(R.id.detail_icon_department)
+    ImageView mIconDepartment;
+    @InjectView(R.id.detail_icon_location)
+    ImageView mIconLocation;
+    @InjectView(R.id.detail_icon_skype)
+    ImageView mIconSkype;
+    @InjectView(R.id.detail_btn_favorite)
+    FloatingActionButton mBtnFavorite;
+
     private Dev mDev;
     private DrawableUtil mDrawableUtil;
     private DatabaseHelper mDatabaseHelper;
@@ -62,39 +94,13 @@ public class DetailActivity extends FillGapBaseActivity<ObservableScrollView> im
         String gsonDev = getIntent().getStringExtra(Dev.TAG);
         mDev = new Gson().fromJson(gsonDev, Dev.class);
         mDrawableUtil = new DrawableUtil(this);
-        initDetailView();
+        ButterKnife.inject(this);
         initDevDetail();
         try {
             mDevDao = getHelper().getDao();
         } catch (SQLException e) {
             Log.e(Dev.TAG, "Database exception", e);
         }
-    }
-
-    private void initDetailView() {
-        mName = (TextView) findViewById(R.id.detail_name);
-        mPhone = (TextView) findViewById(R.id.detail_phone);
-        mEmail = (TextView) findViewById(R.id.detail_email);
-        mPosition = (TextView) findViewById(R.id.detail_position);
-        mDepartment = (TextView) findViewById(R.id.detail_department);
-        mLocation = (TextView) findViewById(R.id.detail_location);
-        mSkype = (TextView) findViewById(R.id.detail_skype);
-        mPhoto = (ImageView) findViewById(R.id.detail_photo);
-
-        mIconEmail = (ImageView) findViewById(R.id.detail_icon_email);
-        mIconPhone = (ImageView) findViewById(R.id.detail_icon_phone);
-        mIconLocation = (ImageView) findViewById(R.id.detail_icon_location);
-        mIconDepartment = (ImageView) findViewById(R.id.detail_icon_department);
-        mIconSkype = (ImageView) findViewById(R.id.detail_icon_skype);
-
-        FloatingActionButton mBtnFavorite = (FloatingActionButton) findViewById(R.id.detail_btn_favorite);
-        mBtnFavorite.setOnClickListener(this);
-        if (mDev.isLocal()) {
-            mBtnFavorite.setImageDrawable(mDrawableUtil.getDelete(DrawableUtil.COLOR_WITHE));
-        } else {
-            mBtnFavorite.setImageDrawable(mDrawableUtil.getFavorite(DrawableUtil.COLOR_WITHE));
-        }
-
     }
 
     private void initDevDetail() {
@@ -112,6 +118,13 @@ public class DetailActivity extends FillGapBaseActivity<ObservableScrollView> im
         mLocation.setText(mDev.getLocation());
         mSkype.setText(mDev.getSkype());
         Picasso.with(this).load(ImagePath.getPhotoThumbUrl(this, mDev.getPhoto())).into(mPhoto);
+
+        mBtnFavorite.setOnClickListener(this);
+        if (mDev.isLocal()) {
+            mBtnFavorite.setImageDrawable(mDrawableUtil.getDelete(DrawableUtil.COLOR_WITHE));
+        } else {
+            mBtnFavorite.setImageDrawable(mDrawableUtil.getFavorite(DrawableUtil.COLOR_WITHE));
+        }
 
     }
 
@@ -164,4 +177,5 @@ public class DetailActivity extends FillGapBaseActivity<ObservableScrollView> im
         }
         return mDatabaseHelper;
     }
+
 }

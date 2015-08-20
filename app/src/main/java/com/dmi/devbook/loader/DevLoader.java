@@ -24,16 +24,14 @@ public class DevLoader extends AbstractLoader<Dev> {
     private Dao<Dev, Integer> mDevDao;
     private int devType;
     private DatabaseHelper mDatabaseHelper;
+    private TemplateApplication mTemplateApplication=null;
 
     public DevLoader(final TemplateApplication application, int devType) {
         super(application);
         application.inject(this);
+        this.mTemplateApplication=application;
         this.devType = devType;
-        try {
-            this.mDevDao = getHelper(application.getApplicationContext()).getDao();
-        } catch (SQLException ex) {
-            //Error
-        }
+
     }
 
 
@@ -48,6 +46,7 @@ public class DevLoader extends AbstractLoader<Dev> {
         } else {
             try {
                 if (mDevDao != null) {
+                    this.mDevDao = getHelper(mTemplateApplication.getApplicationContext()).getDao();
                     return mDevDao.queryForAll();
                 } else {
                     return null;
