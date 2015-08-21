@@ -45,7 +45,7 @@ releaseHelper {
 
 // Where to find Ricotta resources.
 //ricotta {
-//    projectName 'TemplateApplication'
+//    projectName 'DevBookApplication'
 //    host 'ricotta-ost.appspot.com'
 //    translation {
 //        language 'en'

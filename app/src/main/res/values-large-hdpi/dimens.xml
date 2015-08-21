@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- standard margin size-->
+    <dimen name="margin_extra_short">8dp</dimen>
+    <dimen name="margin_short">16dp</dimen>
+    <dimen name="margin_standard">24dp</dimen>
+
+    <!-- standard font size -->
+    <dimen name="text_extra_small">14sp</dimen>
+    <dimen name="text_small">16sp</dimen>
+    <dimen name="text_medium">24sp</dimen>
+    <dimen name="text_large">28sp</dimen>
+    <dimen name="text_xlarge">36sp</dimen>
+
+    <!-- Detail Layout -->
+    <dimen name="detail_header_height">72dp</dimen>
+    <dimen name="detail_flexible_space_image_height">340dp</dimen>
+    <dimen name="detail_margin_floting_button">42dp</dimen>
+
+    <!-- Dev Entry-->
+    <dimen name="dev_photo_size">72dp</dimen>
+
+    <!-- General -->
+    <dimen name="icon_size">32dp</dimen>
+
+
+</resources>

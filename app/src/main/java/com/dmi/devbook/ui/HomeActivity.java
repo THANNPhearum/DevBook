@@ -28,19 +28,14 @@ import java.sql.SQLException;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static final String TEST_STRING_KEY = "TEST_STRING_KEY";
-    private String myTestString = "initial_value";
-
+    private static final String SELECTED_DRAWER = "SELECTED_DRAWER";
     private DrawableUtil mDrawableUtil;
-
     private DatabaseHelper mDatabaseHelper;
-    private int mNbFavorite;
-    private int mDrawerSelected = 0;
+    private int mNbFavorite = 0;
+    private int mDrawerSelected = Dev.ANDROID_DEVELOPER;
     private Toolbar mToolbar;
-
-    public String getMyTestString() {
-        return myTestString;
-    }
+    private Dao<Dev, Integer> mDevDao;
+    private Drawer mDrawer;
 
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,19 +49,13 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         if (savedInstanceState != null) {
-            myTestString = savedInstanceState.getString(TEST_STRING_KEY, "default");
+            mDrawerSelected = savedInstanceState.getInt(SELECTED_DRAWER);
         }
+        //Initial Drawable Icon
         mDrawableUtil = new DrawableUtil(this);
-        Dao<Dev,Integer> mDevDao=null;
-        try {
-            mDevDao = getHelper().getDao();
-            mNbFavorite = (int) mDevDao.countOf();
-        } catch (SQLException e) {
-            Log.e(Dev.TAG, "Database exception", e);
-            return;
-        }
 
-       new DrawerBuilder()
+        //Create DrawerLayout
+        mDrawer = new DrawerBuilder()
                 .withActivity(this)
                 .withHeader(R.layout.header)
                 .addDrawerItems(
@@ -80,32 +69,52 @@ public class HomeActivity extends AppCompatActivity {
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                        //mDrawerSelected = position;
+                        mDrawerSelected = position + 1;
                         if (drawerItem != null) {
-                            switchFragment(position);
+                            switchFragment(mDrawerSelected);
                         }
                         return false;
+                    }
+                }).withOnDrawerListener(new Drawer.OnDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(View view) {
+                        //update the number of Favorite
+                        updateFavorite();
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View view) {
+                    }
+
+                    @Override
+                    public void onDrawerSlide(View view, float v) {
                     }
                 }).build();
         //Load default
         setTitle(getString(R.string.drawer_item_android));
+        switchFragment(mDrawerSelected);
+        updateFavorite();
+    }
 
-        //dagger 2
-        //pull to refresh
-        //rotation
-        //gpu render
-        //cpu usage
-        //
-        switchFragment(0);
-
-
-
+    private void updateFavorite() {
+        try {
+            mDevDao = getHelper().getDao();
+            mNbFavorite = (int) mDevDao.countOf();
+            if (mNbFavorite > 0) {
+                mDrawer.updateBadge(mNbFavorite + "", Dev.FAVORITE_DEVELOPER - 1);
+            }
+        } catch (SQLException e) {
+            Log.e(Dev.TAG, "Database exception", e);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-       // switchFragment(0);
+        if (mDrawerSelected == Dev.FAVORITE_DEVELOPER) {
+            //Do refresh after delete
+            switchFragment(Dev.FAVORITE_DEVELOPER);
+        }
     }
 
     @Override
@@ -114,23 +123,28 @@ public class HomeActivity extends AppCompatActivity {
         getSupportFragmentManager().popBackStack();
         return true;
     }
+
     private void switchFragment(int position) {
-        if (position == 0) {
+        if (position == Dev.ANDROID_DEVELOPER) {
             onFragmentSelected(DevFragment.newInstance(Dev.ANDROID_DEVELOPER));
             mToolbar.setTitle(getString(R.string.drawer_item_android));
             mToolbar.setNavigationIcon(mDrawableUtil.getAndroid(DrawableUtil.COLOR_WITHE));
-        } else if (position == 1) {
+
+        } else if (position == Dev.IOS_DEVELOPER) {
             onFragmentSelected(DevFragment.newInstance(Dev.IOS_DEVELOPER));
             mToolbar.setTitle(getString(R.string.drawer_item_ios));
             mToolbar.setNavigationIcon(mDrawableUtil.getIos(DrawableUtil.COLOR_WITHE));
-        } else if (position == 2) {
+
+        } else if (position == Dev.BACKEND_DEVELOPER) {
             onFragmentSelected(DevFragment.newInstance(Dev.BACKEND_DEVELOPER));
             mToolbar.setTitle(getString(R.string.drawer_item_backend));
             mToolbar.setNavigationIcon(mDrawableUtil.getBackend(DrawableUtil.COLOR_WITHE));
+
         } else {
             onFragmentSelected(DevFragment.newInstance(Dev.FAVORITE_DEVELOPER));
             mToolbar.setTitle(getString(R.string.drawer_item_favorite));
             mToolbar.setNavigationIcon(mDrawableUtil.getFavorite(DrawableUtil.COLOR_WITHE));
+
         }
     }
 
@@ -138,7 +152,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(TEST_STRING_KEY, "saving_state");
+        outState.putInt(SELECTED_DRAWER, mDrawerSelected);
     }
 
     public void onFragmentSelected(final Fragment fragment) {
@@ -153,10 +167,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-		/*
-         * You'll need this in your class to release the helper when done.
-		 */
+        //Release the helper when done.
         if (mDatabaseHelper != null) {
             OpenHelperManager.releaseHelper();
             mDatabaseHelper = null;

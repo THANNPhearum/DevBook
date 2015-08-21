@@ -42,7 +42,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putLong(STATE_FINISH_TIME, mFinishTime);
     }
 

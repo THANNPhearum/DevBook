@@ -2,7 +2,7 @@ package com.dmi.devbook.module;
 
 import android.app.Application;
 
-import com.dmi.devbook.TemplateApplication;
+import com.dmi.devbook.DevBookApplication;
 
 import javax.inject.Singleton;
 
@@ -14,9 +14,9 @@ import dagger.Provides;
  */
 @Module(library = true)
 public class ApplicationModule {
-    private final TemplateApplication mApp;
+    private final DevBookApplication mApp;
 
-    public ApplicationModule(TemplateApplication app) {
+    public ApplicationModule(DevBookApplication app) {
         this.mApp = app;
     }
 

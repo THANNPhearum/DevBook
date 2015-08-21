@@ -1,7 +1,7 @@
 package com.dmi.devbook.util;
 
+import com.dmi.devbook.DevBookApplication;
 import com.dmi.devbook.R;
-import com.dmi.devbook.TemplateApplication;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -14,13 +14,13 @@ public final class AnalyticsUtil {
         //not called, but required by checkstyle
     }
 
-    public static void trackScreen(final TemplateApplication app, final ScreenName screen) {
+    public static void trackScreen(final DevBookApplication app, final ScreenName screen) {
         Tracker t = app.getTracker();
         t.setScreenName(app.getString(screen.getScreenNameRef()));
         t.send(new HitBuilders.AppViewBuilder().build());
     }
 
-    public static void trackEvent(final TemplateApplication app, final Event event, final String label) {
+    public static void trackEvent(final DevBookApplication app, final Event event, final String label) {
         Tracker t = app.getTracker();
         t.send(new HitBuilders.EventBuilder()
                 .setCategory(app.getString(event.getCategoryRef()))
@@ -33,7 +33,7 @@ public final class AnalyticsUtil {
 
         SPLASH(R.string.activity_splash),
         HOME(R.string.activity_home),
-        LOREM(R.string.fragment_lorem);
+        LOREM(R.string.fragment_dev);
 
         private final int mScreenNameRef;
 

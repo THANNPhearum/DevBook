@@ -2,23 +2,17 @@
 <resources>
 
     <string name="application.name">DevBook v1</string>
-
+    <!-- Analytic -->
     <string name="label.drawer.open">Open</string>
     <string name="label.drawer.close">Close</string>
-
-    <string name="label.menu.oneparagraph">Android</string>
-    <string name="label.menu.twoparagraphs">iOS</string>
-    <string name="label.menu.threeparagraphs">Backend</string>
-
-
     <string name="label.action.refresh">Refresh</string>
 
     <string name="activity_splash">splash</string>
     <string name="activity_home">home</string>
-    <string name="fragment_lorem">Lorem</string>
-
+    <string name="fragment_dev">dev</string>
     <string name="link_article">link</string>
     <string name="link_action">click</string>
+
 
     <!-- Drawer -->
     <string name="drawer_item_android">Android</string>
@@ -42,6 +36,9 @@
     <string name="favorite_already_added">Already added to Favorite!</string>
     <string name="favorite_saved">Add to Favorite successful!</string>
     <string name="favorite_deleted">Delete favorite successful!</string>
+
+    <!-- Error -->
+    <string name="error_no_internet">There seems to be a problem.\nPlease ensure that you have an internet connection and try again.</string>
 
 
 </resources>

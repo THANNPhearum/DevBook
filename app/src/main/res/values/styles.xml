@@ -22,28 +22,15 @@
         <item name="actionBarTheme">@style/MyApp.ActionBarTheme</item>
         <item name="actionBarStyle">@style/ThemeActionBar</item>
         <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="style"/>
-
-    <style name="style.text.medium" parent="android:TextAppearance.Medium">
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="style.text.large" parent="android:TextAppearance.Large">
-        <item name="android:fontFamily">sans-serif-light</item>
-    </style>
 
     <style name="style.menu">
         <item name="android:background">@color/background.light</item>
         <item name="android:dividerHeight">0px</item>
         <item name="android:divider">@null</item>
-    </style>
-
-    <style name="style.menu.entry" parent="style.text.medium">
-        <item name="android:gravity">left|center_vertical</item>
-        <item name="android:padding">@dimen/text_padding</item>
     </style>
 
     <style name="ThemeActionBar"

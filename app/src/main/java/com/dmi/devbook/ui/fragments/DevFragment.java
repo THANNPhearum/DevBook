@@ -6,21 +6,28 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.dmi.devbook.DevBookApplication;
 import com.dmi.devbook.R;
-import com.dmi.devbook.TemplateApplication;
 import com.dmi.devbook.adapter.DevAdapter;
 import com.dmi.devbook.intent.DetailIntent;
+import com.dmi.devbook.listener.EndlessRecyclerOnScrollListener;
 import com.dmi.devbook.listener.RecyclerItemClickListener;
 import com.dmi.devbook.loader.DevLoader;
 import com.dmi.devbook.model.Dev;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,35 +35,37 @@ public class DevFragment extends AbstractSpinnerFragment {
 
     private static final String ARG_DEV_TYPE = "ARG_DEV_TYPE";
     private RecyclerView mRecyclerView;
+    private TextView mMessage;
     private List<Dev> mDevs;
     private SwipeRefreshLayout mSwipeRefreshLayout = null;
+    private EndlessRecyclerOnScrollListener mRecyclerOnScrollListener;
+    private DevAdapter mDevAdapter;
 
     public static DevFragment newInstance(final int devType) {
         final Bundle args = new Bundle();
         args.putInt(ARG_DEV_TYPE, devType);
-
         final DevFragment devFragment = new DevFragment();
         devFragment.setArguments(args);
-
         return devFragment;
     }
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-       // setHasOptionsMenu(true);
+        // setHasOptionsMenu(true);
         mDevs = new ArrayList<>();
+        mDevs.clear();
     }
 
     @Override
     public View onCreateContentView(final LayoutInflater inflater, final ViewGroup container,
                                     final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dev, container, false);
+        mMessage = (TextView) view.findViewById(R.id.general_message);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -71,44 +80,38 @@ public class DevFragment extends AbstractSpinnerFragment {
             @Override
             public void onRefresh() {
                 // Refresh items
-                refreshItems();
+                refreshItems(1);
             }
         });
-
+        mRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                //load more
+                boolean isLocal = (getDevType() == Dev.FAVORITE_DEVELOPER);
+                if (!isLocal) {
+                    refreshItems(current_page);
+                }
+            }
+        };
+        mRecyclerView.setOnScrollListener(mRecyclerOnScrollListener);
+        mDevAdapter = new DevAdapter(mDevs, getActivity());
+        mRecyclerView.setAdapter(mDevAdapter);
         return view;
     }
 
-    void refreshItems() {
-        getLoaderManager().initLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication()));
+    void refreshItems(int page) {
+        getLoaderManager().initLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication(), page));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refreshItems();
+        refreshItems(1);
     }
 
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-        inflater.inflate(R.menu.fragment_dev, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        if (id == R.id.menu_refresh) {
-            refreshItems();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private TemplateApplication getApplication() {
+    private DevBookApplication getApplication() {
         final Activity activity = getActivity();
-        return (TemplateApplication) activity.getApplication();
+        return (DevBookApplication) activity.getApplication();
     }
 
     private int getDevType() {
@@ -117,8 +120,9 @@ public class DevFragment extends AbstractSpinnerFragment {
 
     private final class AndroidDevLoaderCallbacks extends DevLoader.AbstractLoremLoaderCallbacks {
 
-        private AndroidDevLoaderCallbacks(final TemplateApplication application) {
-            super(application, getDevType());
+        private AndroidDevLoaderCallbacks(final DevBookApplication application, int page) {
+            super(application, getDevType(), page);
+
         }
 
         @Override
@@ -131,17 +135,26 @@ public class DevFragment extends AbstractSpinnerFragment {
         public void onLoadFinished(Loader<List<Dev>> loader, List<Dev> data) {
             super.onLoadFinished(loader, data);
             hideSpinner();
-            mSwipeRefreshLayout.setRefreshing(false);
-            mDevs.clear();
-            boolean isLocal = (getDevType() == Dev.FAVORITE_DEVELOPER);
-            for (Dev dev : data) {
-                dev.setLocal(isLocal);
-                mDevs.add(dev);
+            if (data != null) {
+                mMessage.setVisibility(View.GONE);
+                Log.d(Dev.TAG, "Data Size=" + data.size());
+                mSwipeRefreshLayout.setRefreshing(false);
+                boolean isLocal = (getDevType() == Dev.FAVORITE_DEVELOPER);
+                if (isLocal) {
+                    mDevs.clear();
+                }
+                for (Dev dev : data) {
+                    dev.setLocal(isLocal);
+                    mDevs.add(dev);
+                }
+                mRecyclerOnScrollListener.setLoading(data.size() == 0);
+                mDevAdapter.notifyDataSetChanged();
+            } else {
+                mMessage.setVisibility(View.VISIBLE);
+                String message = ((DevLoader) loader).getErrorMessage();
+                mMessage.setText(message);
             }
-            DevAdapter mDevAdapter = new DevAdapter(mDevs, getActivity());
-            mRecyclerView.setAdapter(mDevAdapter);
-            mDevAdapter.notifyDataSetChanged();
-
         }
     }
+
 }

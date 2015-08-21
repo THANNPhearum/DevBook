@@ -17,6 +17,7 @@
 package com.dmi.devbook.ui;
 
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dmi.devbook.R;
+import com.dmi.devbook.intent.HomeIntent;
 import com.dmi.devbook.model.Dev;
 import com.dmi.devbook.sqlite.DatabaseHelper;
 import com.dmi.devbook.util.DrawableUtil;
@@ -91,9 +93,15 @@ public class DetailActivity extends FillGapBaseActivity<ObservableScrollView> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Show Elevation
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getSupportActionBar().setElevation(3f);
+        }
+
         String gsonDev = getIntent().getStringExtra(Dev.TAG);
         mDev = new Gson().fromJson(gsonDev, Dev.class);
         mDrawableUtil = new DrawableUtil(this);
+
         ButterKnife.inject(this);
         initDevDetail();
         try {

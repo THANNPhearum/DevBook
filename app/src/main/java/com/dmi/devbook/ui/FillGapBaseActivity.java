@@ -57,12 +57,12 @@ public abstract class FillGapBaseActivity<S extends Scrollable> extends BaseActi
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
 
-        mFlexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
+        mFlexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.detail_flexible_space_image_height);
         mActionBarSize = getActionBarSize();
 
         // Even when the top gap has began to change, header bar still can move
         // within mIntersectionHeight.
-        mIntersectionHeight = getResources().getDimensionPixelSize(R.dimen.intersection_height);
+        mIntersectionHeight = getResources().getDimensionPixelSize(R.dimen.margin_standard);
 
         mImage = findViewById(R.id.detail_photo);
         mHeader = findViewById(R.id.header);
