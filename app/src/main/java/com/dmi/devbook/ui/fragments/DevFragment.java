@@ -70,7 +70,11 @@ public class DevFragment extends AbstractSpinnerFragment {
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        startActivity(new DetailIntent(getActivity(), mDevs.get(position)));
+                        if (mDevs != null) {
+                            if (mDevs.size() > 0) {
+                                startActivity(new DetailIntent(getActivity(), mDevs.get(position)));
+                            }
+                        }
                     }
                 })
         );
@@ -80,7 +84,7 @@ public class DevFragment extends AbstractSpinnerFragment {
             @Override
             public void onRefresh() {
                 // Refresh items
-                refreshItems(1);
+                refreshItems(Dev.ANDROID_DEVELOPER);
             }
         });
         mRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(linearLayoutManager) {

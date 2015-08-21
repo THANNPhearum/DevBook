@@ -4,7 +4,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color.black">
+        android:background="@color/color.red">
 
         <TextView
             android:id="@+id/text_splash_screen"
@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/application.name"
-            android:textColor="@color/color.red"
+            android:textColor="@color/color.white"
             android:textSize="@dimen/text_xlarge"/>
     </FrameLayout>
 </merge>
