@@ -104,7 +104,16 @@ public class DevFragment extends AbstractSpinnerFragment {
     }
 
     void refreshItems(int page) {
-        getLoaderManager().initLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication(), page));
+        if (getDevType() != Dev.FAVORITE_DEVELOPER) {
+            if (DevBookApplication.get(getActivity()).isNetworkAvailable()) {
+                getLoaderManager().initLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication(), page));
+            } else {
+                mMessage.setText(getString(R.string.error_no_internet));
+                hideSpinner();
+            }
+        }else{
+            getLoaderManager().initLoader(R.id.loader_lorem, null, new AndroidDevLoaderCallbacks(getApplication(), page));
+        }
     }
 
     @Override
@@ -155,8 +164,6 @@ public class DevFragment extends AbstractSpinnerFragment {
                 mDevAdapter.notifyDataSetChanged();
             } else {
                 mMessage.setVisibility(View.VISIBLE);
-                String message = ((DevLoader) loader).getErrorMessage();
-                mMessage.setText(message);
             }
         }
     }

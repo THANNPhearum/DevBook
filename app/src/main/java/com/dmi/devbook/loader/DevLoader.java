@@ -6,7 +6,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
 import com.dmi.devbook.DevBookApplication;
-import com.dmi.devbook.R;
 import com.dmi.devbook.model.Dev;
 import com.dmi.devbook.service.DevService;
 import com.dmi.devbook.sqlite.DatabaseHelper;
@@ -16,8 +15,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import retrofit.RetrofitError;
 
 public class DevLoader extends AbstractLoader<Dev> {
 
@@ -44,10 +41,17 @@ public class DevLoader extends AbstractLoader<Dev> {
 
     }
 
-    @Override
-    protected List<Dev> queryApiForData() throws RetrofitError {
 
-        if (mDevType == Dev.FAVORITE_DEVELOPER) {
+    @Override
+    public List<Dev> loadInBackground() {
+        if (mDevType == Dev.ANDROID_DEVELOPER) {
+            //return mDevService.getAndroidDevs(mPage);
+            return  mDevService.getDevs("android",mPage);
+        } else if (mDevType == Dev.IOS_DEVELOPER) {
+            return  mDevService.getDevs("ios", mPage);
+        } else if (mDevType == Dev.BACKEND_DEVELOPER) {
+            return  mDevService.getDevs("backend", mPage);
+        } else {
             try {
                 if (mDevDao != null) {
                     return mDevDao.queryForAll();
@@ -56,29 +60,9 @@ public class DevLoader extends AbstractLoader<Dev> {
                 }
             } catch (SQLException ex) {
                 //return null for empty favorite
-                return null;
             }
-        } else {
-            if (mDevType == Dev.ANDROID_DEVELOPER) {
-                return mDevService.getDevs("android", mPage);
-            } else if (mDevType == Dev.IOS_DEVELOPER) {
-                return mDevService.getDevs("ios", mPage);
-            } else if (mDevType == Dev.BACKEND_DEVELOPER) {
-                return mDevService.getDevs("backend", mPage);
-            }
+            return null;
         }
-        //return null for empty favorite
-        return null;
-    }
-
-    @Override
-    public List<Dev> loadInBackground() {
-        try {
-            return queryApiForData();
-        } catch (RetrofitError error) {
-            reactToError(error);
-        }
-        return null;
     }
 
     public abstract static class AbstractLoremLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<Dev>> {
